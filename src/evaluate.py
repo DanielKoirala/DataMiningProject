@@ -4,7 +4,7 @@ from sklearn.metrics import classification_report
 # Load saved models and vectorizer
 nb_model = joblib.load("./models/nb_model.pkl")
 rf_model = joblib.load("./models/rf_model.pkl")
-vectorizer = joblib.load("../models/vectorizer.pkl")
+vectorizer = joblib.load("./models/vectorizer.pkl")
 
 # Load test data
 from preprocess import load_and_preprocess_data, extract_features

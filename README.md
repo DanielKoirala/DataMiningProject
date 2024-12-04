@@ -1,6 +1,6 @@
 # DataMiningProject
 
-Need to have python and pip installed. I'd recommend directory structure as DataMining-> DataMiningProject. Set up venv under the DataMining directory not the DataMiningProject directory
+Need to have python and pip installed. I'd recommend directory structure as DataMining-> DataMiningProject. Set up venv under the DataMining directory not the DataMiningProject directory <br>
 so it doesn't include the files on the repo.
 
 Set-up venv:

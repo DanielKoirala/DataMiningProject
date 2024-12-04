@@ -6,7 +6,7 @@ import joblib
 from preprocess import load_and_preprocess_data, extract_features
 
 # Load and preprocess the new dataset
-data = load_and_preprocess_data("/path/to/new_dataset.csv")  # Update with actual path
+data = load_and_preprocess_data("./data/spam_dataset.csv")  # Update with actual path
 X, vectorizer = extract_features(data)
 y = data['label']  # Binary labels: 0 for ham, 1 for spam
 
@@ -31,6 +31,6 @@ evaluate_model(nb_model, X_test, y_test, "Naive Bayes")
 evaluate_model(rf_model, X_test, y_test, "Random Forest")
 
 # Save models
-joblib.dump(nb_model, "../models/nb_model.pkl")
-joblib.dump(rf_model, "../models/rf_model.pkl")
-joblib.dump(vectorizer, "../models/vectorizer.pkl")
+joblib.dump(nb_model, "./models/nb_model.pkl")
+joblib.dump(rf_model, "./models/rf_model.pkl")
+joblib.dump(vectorizer, "./models/vectorizer.pkl")

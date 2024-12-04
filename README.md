@@ -10,4 +10,9 @@ source /venv/bin/activate
 Install the following dependencies and packages:
 pip install pandas numpy scikit-learn nltk flask matplotlib
 
+Running the code:
+
+python src/preprocess.py
+python src/train.py
+
 

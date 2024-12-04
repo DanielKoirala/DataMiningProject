@@ -5,8 +5,8 @@ from preprocess import preprocess_text
 app = Flask(__name__)
 
 # Load models and vectorizer
-ensemble_model = joblib.load("../models/ensemble_model.pkl")
-vectorizer = joblib.load("../models/vectorizer.pkl")
+ensemble_model = joblib.load("./models/ensemble_model.pkl")
+vectorizer = joblib.load("./models/vectorizer.pkl")
 
 # Default route with a UI form
 @app.route('/')
@@ -20,11 +20,11 @@ def predict():
     if request.is_json:
         email_text = request.json.get('text', '')
     else:
-        email_text = request.form.get('email_text', '')
+        email_text = request.form.get('sms_text', '')
 
     # Check if input is provided
     if not email_text:
-        return jsonify({'error': 'No email text provided'}), 400
+        return jsonify({'error': 'No sms text provided'}), 400
 
     # Preprocess and predict
     cleaned_text = preprocess_text(email_text)

@@ -2,8 +2,8 @@ import joblib
 from preprocess import preprocess_text
 
 # Load saved models and vectorizer
-ensemble_model = joblib.load("../models/ensemble_model.pkl")
-vectorizer = joblib.load("../models/vectorizer.pkl")
+ensemble_model = joblib.load("./models/ensemble_model.pkl")
+vectorizer = joblib.load("./models/vectorizer.pkl")
 
 # Predict function
 def predict_email(text):

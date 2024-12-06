@@ -1,3 +1,4 @@
+import argparse
 import joblib
 from preprocess import preprocess_text
 
@@ -5,43 +6,40 @@ from preprocess import preprocess_text
 ensemble_model = joblib.load("./models/ensemble_model.pkl")
 vectorizer = joblib.load("./models/vectorizer.pkl")
 
-# Predict function
-def predict_email(text, return_prob=False):
+# Predict function with detailed debugging
+def predict_email(text, threshold=0.5):
     """
-    Predict whether an email is spam or not.
-
-    Args:
-        text (str): The input email text to classify.
-        return_prob (bool): Whether to return the spam probability.
-
-    Returns:
-        str: "Spam" or "Not Spam".
-        float (optional): Probability of being spam if return_prob is True.
+    Predict whether an email is spam or not based on a probability threshold.
+    Includes detailed debugging for preprocessing, vectorization, and prediction.
     """
-    try:
-        if not text or not isinstance(text, str):
-            raise ValueError("Input text must be a non-empty string.")
-        
-        # Preprocess text
-        cleaned_text = preprocess_text(text)
-        
-        # Transform text into TF-IDF features
-        features = vectorizer.transform([cleaned_text])
-        
-        # Get prediction
-        prediction = ensemble_model.predict(features)
-        if return_prob:
-            prob = ensemble_model.predict_proba(features)[0][1]  # Probability of being spam
-            return ("Spam" if prediction[0] == 1 else "Not Spam", prob)
-        return "Spam" if prediction[0] == 1 else "Not Spam"
-    except Exception as e:
-        return f"Error: {str(e)}"
+    if not text:
+        raise ValueError("Input text must be a non-empty string.")
+    
+    # Preprocess text
+    cleaned_text = preprocess_text(text)
+    print(f"Original text: {text}")
+    print(f"Cleaned text: {cleaned_text}")
+    
+    # Transform text into TF-IDF features
+    features = vectorizer.transform([cleaned_text])
+    print(f"Feature vector (non-zero indices): {features.nonzero()}")
+    print(f"Feature vector values:\n{features.toarray()}")
+    
+    # Get probabilities
+    probabilities = ensemble_model.predict_proba(features)
+    spam_probability = probabilities[0][1]  # Probability of being spam
+    print(f"Spam probability: {spam_probability}")
 
-# Example usage
+    # Classify based on threshold
+    result = "Spam" if spam_probability >= threshold else "Not Spam"
+    print(f"Prediction: {result}")
+    return result
+
 if __name__ == "__main__":
-    text = "Congratulations! You've won a free gift card. Click here to claim."
-    result = predict_email(text, return_prob=True)
-    if isinstance(result, tuple):
-        print(f"Prediction: {result[0]}, Probability: {result[1]:.2f}")
-    else:
-        print(result)
+    # Parse command-line arguments
+    parser = argparse.ArgumentParser(description="Spam classification script")
+    parser.add_argument("text", type=str, help="The text to classify")
+    args = parser.parse_args()
+
+    # Perform prediction
+    predict_email(args.text, threshold=0.1)

@@ -12,8 +12,8 @@ from preprocess import load_and_preprocess_data, extract_features
 data = load_and_preprocess_data("./data/spam_dataset.csv")
 
 # TF-IDF Feature Extraction with n-grams
-ngram_range = (1, 2)  # Unigrams and bigrams
-max_features = 5000   # Maximum number of features for TF-IDF
+ngram_range = (1, 3)  # Unigrams and bigrams
+max_features = 5000  # Maximum number of features for TF-IDF
 X, vectorizer = extract_features(data, ngram_range=ngram_range, max_features=max_features)
 
 # Map labels: 'ham' -> 0, 'spam' -> 1

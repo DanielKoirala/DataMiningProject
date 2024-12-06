@@ -48,7 +48,7 @@ def predict():
 
     # Classify text
     try:
-        result = classify_text(email_text, threshold=0.5)
+        result = classify_text(email_text, threshold=0.1)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 

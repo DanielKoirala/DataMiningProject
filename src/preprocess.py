@@ -51,18 +51,19 @@ def load_and_preprocess_data(filepath):
     data['cleaned_text'] = data['text'].apply(preprocess_text)  # Preprocess the text column
     return data
 
-def extract_features(data, max_features=5000):
+def extract_features(data, ngram_range=(1, 2), max_features=5000):
     """
-    Converts preprocessed text data into TF-IDF features.
+    Converts preprocessed text data into TF-IDF features with n-grams.
     
     Args:
         data (pd.DataFrame): DataFrame with a 'cleaned_text' column.
+        ngram_range (tuple): The range of n-grams to include (e.g., (1, 2) for unigrams and bigrams).
         max_features (int): Maximum number of features for TF-IDF vectorization.
     
     Returns:
         tuple: Transformed feature matrix and the fitted TF-IDF vectorizer.
     """
-    vectorizer = TfidfVectorizer(max_features=max_features)
+    vectorizer = TfidfVectorizer(ngram_range=ngram_range, max_features=max_features)
     X = vectorizer.fit_transform(data['cleaned_text'])
     return X, vectorizer
 
